@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">MiniTwitter</string>
+    <string name="hintEmail">Email</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="btn_login">Iniciar sesión</string>
+    <string name="text_create_account">Si aún no tienes cuenta, registrate aquí.</string>
+    <string name="text_go_login">Si ya dispone de una cuenta, inicie sesión aquí.</string>
+    <string name="btn_signup">Registrar</string>
+    <string name="hint_username">Nombre de usuario</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_prueba">PruebaActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="text_inicio">Inicio</string>
+    <string name="tweets_label">Tweets</string>
+</resources>
