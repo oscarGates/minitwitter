@@ -11,10 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import curso.android.minitwitter.dummy.DummyContent;
-import curso.android.minitwitter.dummy.DummyContent.DummyItem;
+
+import curso.android.minitwitter.retrofit.AuthTwitterClient;
+import curso.android.minitwitter.retrofit.AuthTwitterService;
 import curso.android.minitwitter.retrofit.response.Tweet;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.List;
 
@@ -33,6 +38,8 @@ public class TweetListFragment extends Fragment {
     RecyclerView recyclerView;
     MyTweetRecyclerViewAdapter adapter;
     List<Tweet> tweetList;
+    AuthTwitterService authTwitterService;
+    AuthTwitterClient authTwitterClient;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -74,14 +81,36 @@ public class TweetListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+            retrofitInit();
             loadTweetData();
         }
         return view;
     }
 
+    private void retrofitInit() {
+        authTwitterClient = AuthTwitterClient.getInstance();
+        authTwitterService = authTwitterClient.getAuthTwitterService();
+    }
+
     private void loadTweetData(){
-        adapter = new MyTweetRecyclerViewAdapter(getActivity(), tweetList);
-        recyclerView.setAdapter(adapter);
+        Call<List<Tweet>> call = authTwitterService.getAllTweets();
+        call.enqueue(new Callback<List<Tweet>>() {
+            @Override
+            public void onResponse(Call<List<Tweet>> call, Response<List<Tweet>> response) {
+                if(response.isSuccessful()){
+                    tweetList = response.body();
+                    adapter = new MyTweetRecyclerViewAdapter(getActivity(), tweetList);
+                    recyclerView.setAdapter(adapter);
+                }
+                Toast.makeText(getActivity(), "Algo ha ido mal", Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void onFailure(Call<List<Tweet>> call, Throwable t) {
+                Toast.makeText(getActivity(), "Error en la conexión de internet", Toast.LENGTH_SHORT);
+            }
+        });
+
     }
 
 
