@@ -2,8 +2,10 @@ package curso.android.minitwitter.ui;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,10 +15,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import curso.android.minitwitter.R;
-import curso.android.minitwitter.TweetListFragment;
 
 public class DashboardActivity extends AppCompatActivity {
-
+    FloatingActionButton fab;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -39,6 +40,14 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NuevoTweetDialogFragment dialog = new NuevoTweetDialogFragment();
+                dialog.show(getSupportFragmentManager(), "NuevoTweetDialogFragment");
+            }
+        });
         BottomNavigationView navView = findViewById(R.id.nav_view);
         getSupportActionBar().hide();
         // Passing each menu ID as a set of Ids because each

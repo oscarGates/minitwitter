@@ -1,4 +1,4 @@
-package curso.android.minitwitter;
+package curso.android.minitwitter.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,16 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 
+import curso.android.minitwitter.R;
 import curso.android.minitwitter.data.TweetViewModel;
-import curso.android.minitwitter.retrofit.AuthTwitterClient;
-import curso.android.minitwitter.retrofit.AuthTwitterService;
 import curso.android.minitwitter.retrofit.response.Tweet;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import java.util.List;
 
