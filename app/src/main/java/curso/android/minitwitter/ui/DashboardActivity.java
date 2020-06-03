@@ -3,7 +3,9 @@ package curso.android.minitwitter.ui;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -15,9 +17,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import curso.android.minitwitter.R;
+import curso.android.minitwitter.common.Constantes;
+import curso.android.minitwitter.common.SharedPreferencesManager;
 
 public class DashboardActivity extends AppCompatActivity {
     FloatingActionButton fab;
+    ImageView ivAvatar;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -41,6 +46,8 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         fab = findViewById(R.id.fab);
+
+        ivAvatar = findViewById(R.id.imageViewToolbarPhoto);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +62,8 @@ public class DashboardActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_tweets_like, R.id.navigation_profile)
                 .build();
+
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
@@ -62,6 +71,13 @@ public class DashboardActivity extends AppCompatActivity {
                 .beginTransaction()
                 .add(R.id.fragmentContainer, new TweetListFragment())
         .commit();
+
+        String photoUrl = SharedPreferencesManager.getSomeStringValue(Constantes.PREF_PHOTO_URL);
+        if(!photoUrl.isEmpty()){
+            Glide.with(this)
+                    .load(Constantes.MINI_TWITTER_BASE_FILES_URL + photoUrl)
+                    .into(ivAvatar);
+        }
     }
 
 }
