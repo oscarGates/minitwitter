@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,14 +30,13 @@ import java.util.List;
  */
 public class TweetListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     RecyclerView recyclerView;
     MyTweetRecyclerViewAdapter adapter;
     List<Tweet> tweetList;
     TweetViewModel tweetViewModel;
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     /**
@@ -46,7 +46,6 @@ public class TweetListFragment extends Fragment {
     public TweetListFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static TweetListFragment newInstance(int columnCount) {
         TweetListFragment fragment = new TweetListFragment();
@@ -73,9 +72,17 @@ public class TweetListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tweet_list_list, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
             Context context = view.getContext();
-             recyclerView = (RecyclerView) view;
+             recyclerView =  view.findViewById(R.id.list);
+             swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+             swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAzul));
+             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                 @Override
+                 public void onRefresh() {
+                     swipeRefreshLayout.setRefreshing(true);
+                     loadNewData();
+                 }
+             });
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -84,7 +91,7 @@ public class TweetListFragment extends Fragment {
             adapter = new MyTweetRecyclerViewAdapter(getActivity(), tweetList);
             recyclerView.setAdapter(adapter);
             loadTweetData();
-        }
+
         return view;
     }
 
@@ -98,8 +105,17 @@ public class TweetListFragment extends Fragment {
                 adapter.setData(tweetList);
             }
         });
-
-
+    }
+    private void loadNewData(){
+        tweetViewModel.getNewTweets().observe(getActivity(), new Observer<List<Tweet>>() {
+            @Override
+            public void onChanged(List<Tweet> tweets) {
+                tweetList = tweets;
+                swipeRefreshLayout.setRefreshing(false);
+                adapter.setData(tweetList);
+                tweetViewModel.getNewTweets().removeObserver(this);
+            }
+        });
     }
 
 

@@ -58,13 +58,19 @@ public class MyTweetRecyclerViewAdapter extends RecyclerView.Adapter<MyTweetRecy
                         .into(holder.ivAvatar);
             }
 
+            Glide.with(ctx)
+                    .load(R.drawable.ic_like)
+                    .into(holder.ivLike);
+            holder.tvLikesCount.setTextColor(ctx.getResources().getColor(R.color.colorPrimaryDark));
+            holder.tvLikesCount.setTypeface(null, Typeface.BOLD);
+
             for (Like like : holder.mItem.getLikes()) {
                 if (like.getUsername().equals(username)) {
                     Glide.with(ctx)
                             .load(R.drawable.ic_like_pink)
                             .into(holder.ivLike);
                     holder.tvLikesCount.setTextColor(ctx.getResources().getColor(R.color.pink));
-                    holder.tvLikesCount.setTypeface(null, Typeface.BOLD);
+                    holder.tvLikesCount.setTypeface(null, Typeface.NORMAL);
                     break;
                 }
             }
