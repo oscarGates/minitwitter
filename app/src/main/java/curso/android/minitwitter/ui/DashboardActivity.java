@@ -11,6 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -28,14 +29,26 @@ public class DashboardActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment f = null;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    return true;
+                    f = TweetListFragment.newInstance(Constantes.TWEET_LIST_ALL);
+                    fab.show();
+                    break;
                 case R.id.navigation_tweets_like:
-                    return true;
+                    f = TweetListFragment.newInstance(Constantes.TWEET_LIST_FAVS);
+                    fab.hide();
+                    break;
                 case R.id.navigation_profile:
-
-                    return true;
+                    fab.hide();
+                    break;
+            }
+            if( f != null){
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentContainer, f)
+                        .commit();
+                return true;
             }
             return false;
         }
@@ -48,6 +61,8 @@ public class DashboardActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
 
         ivAvatar = findViewById(R.id.imageViewToolbarPhoto);
+        getSupportActionBar().hide();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,20 +71,21 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        getSupportActionBar().hide();
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+   /*     AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_tweets_like, R.id.navigation_profile)
                 .build();
 
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
+        NavigationUI.setupWithNavController(navView, navController);*/
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragmentContainer, new TweetListFragment())
+                .add(R.id.fragmentContainer, TweetListFragment.newInstance(Constantes.TWEET_LIST_ALL))
         .commit();
 
         String photoUrl = SharedPreferencesManager.getSomeStringValue(Constantes.PREF_PHOTO_URL);

@@ -13,6 +13,7 @@ import curso.android.minitwitter.retrofit.response.Tweet;
 public class TweetViewModel extends AndroidViewModel {
     private TweetRepository tweetRepository;
     private LiveData<List<Tweet>> tweets;
+    private LiveData<List<Tweet>> favTweets;
     public TweetViewModel(@NonNull Application application) {
         super(application);
         tweetRepository = new TweetRepository();
@@ -22,12 +23,24 @@ public class TweetViewModel extends AndroidViewModel {
     public LiveData<List<Tweet>> getTweets() {
         return tweets;
     }
+    public LiveData<List<Tweet>> getFavTweets() {
+        favTweets = tweetRepository.getFavsTweets();
+        return favTweets;
+    }
     public LiveData<List<Tweet>> getNewTweets() {
         tweets = tweetRepository.getAllTweets();
         return tweets;
     }
+    public LiveData<List<Tweet>> getNewFavTweets() {
+            getNewTweets();
+            return getFavTweets();
+    }
 
     public void insertTweet(String mensaje){
         tweetRepository.createTweet(mensaje);
+    }
+
+    public void likeTweet(int idTweet){
+        tweetRepository.likeTweet(idTweet);
     }
 }
