@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<group>
+    <item
+        android:id="@+id/action_delete_tweet"
+        android:icon="@drawable/ic_delete_tweet_24"
+        android:title="Eliminar tweet"
+        ></item>
+</group>
+</menu>

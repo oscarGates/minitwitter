@@ -14,6 +14,7 @@ public class TweetViewModel extends AndroidViewModel {
     private TweetRepository tweetRepository;
     private LiveData<List<Tweet>> tweets;
     private LiveData<List<Tweet>> favTweets;
+
     public TweetViewModel(@NonNull Application application) {
         super(application);
         tweetRepository = new TweetRepository();
@@ -27,6 +28,11 @@ public class TweetViewModel extends AndroidViewModel {
         favTweets = tweetRepository.getFavsTweets();
         return favTweets;
     }
+
+    public void deleteTweet(int idTweet){
+        tweetRepository.deleteTweet(idTweet);
+    }
+
     public LiveData<List<Tweet>> getNewTweets() {
         tweets = tweetRepository.getAllTweets();
         return tweets;

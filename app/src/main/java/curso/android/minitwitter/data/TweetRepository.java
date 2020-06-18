@@ -16,6 +16,7 @@ import curso.android.minitwitter.retrofit.AuthTwitterService;
 import curso.android.minitwitter.retrofit.requests.RequestCreateTweet;
 import curso.android.minitwitter.retrofit.response.Like;
 import curso.android.minitwitter.retrofit.response.Tweet;
+import curso.android.minitwitter.retrofit.response.TweetDeleted;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,6 +83,34 @@ public class TweetRepository {
             }
         });
 
+    }
+
+    public void deleteTweet(final int idTweet){
+        Call<TweetDeleted> call = authTwitterService.deleteTweet(idTweet);
+
+        call.enqueue(new Callback<TweetDeleted>() {
+            @Override
+            public void onResponse(Call<TweetDeleted> call, Response<TweetDeleted> response) {
+                if(response.isSuccessful()){
+                    List<Tweet> clonedTweets = new ArrayList<>();
+                    for(int i = 0; i < allTweets.getValue().size(); i++){
+                        if(allTweets.getValue().get(i).getId() != idTweet){
+                            clonedTweets.add(allTweets.getValue().get(i));
+                        }
+                    }
+                    allTweets.setValue(clonedTweets);
+                    getFavsTweets();
+                } else {
+                    Toast.makeText(MyApp.getContext(), "Algo ha ido mal intentalo de nuevo", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TweetDeleted> call, Throwable t) {
+                Toast.makeText(MyApp.getContext(), "Error en la conexión intentelo mas tarde.", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     public void likeTweet(int idTweet){
