@@ -12,14 +12,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import curso.android.minitwitter.R;
 import curso.android.minitwitter.common.Constantes;
 import curso.android.minitwitter.common.SharedPreferencesManager;
+import curso.android.minitwitter.ui.tweets.NuevoTweetDialogFragment;
+import curso.android.minitwitter.ui.tweets.TweetListFragment;
 
 public class DashboardActivity extends AppCompatActivity {
     FloatingActionButton fab;

@@ -9,7 +9,7 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.TweetListFragment"
+    tools:context=".ui.tweets.TweetListFragment"
     tools:listitem="@layout/fragment_tweet_list" >
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"

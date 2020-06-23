@@ -1,4 +1,4 @@
-package curso.android.minitwitter.ui;
+package curso.android.minitwitter.ui.tweets;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -67,7 +67,17 @@ public class MyTweetRecyclerViewAdapter extends RecyclerView.Adapter<MyTweetRecy
                     .into(holder.ivLike);
             holder.tvLikesCount.setTextColor(ctx.getResources().getColor(R.color.colorPrimaryDark));
             holder.tvLikesCount.setTypeface(null, Typeface.BOLD);
+            holder.ivShowMenu.setVisibility(View.GONE);
+            if(holder.mItem.getUser().getUsername().equals(username)){
+                holder.ivShowMenu.setVisibility(View.VISIBLE);
+            }
 
+            holder.ivShowMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tweetViewModel.openDialogTweetMenu(ctx, holder.mItem.getId());
+                }
+            });
             holder.ivLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -99,6 +109,7 @@ public class MyTweetRecyclerViewAdapter extends RecyclerView.Adapter<MyTweetRecy
         public final View mView;
         public final ImageView ivAvatar;
         public final ImageView ivLike;
+        public final ImageView ivShowMenu;
         public final TextView tvUsername;
         public final TextView tvMessage;
         public final TextView tvLikesCount;
@@ -107,6 +118,7 @@ public class MyTweetRecyclerViewAdapter extends RecyclerView.Adapter<MyTweetRecy
         public ViewHolder(View view) {
             super(view);
             mView = view;
+            ivShowMenu = view.findViewById(R.id.imageViewShowMenu);
             ivAvatar = view.findViewById(R.id.imageViewAvatar);
             ivLike =  view.findViewById(R.id.imageViewLike);
             tvUsername = view.findViewById(R.id.textViewUsername);

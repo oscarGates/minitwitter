@@ -44,7 +44,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textViewUsername"
         app:layout_constraintTop_toBottomOf="@+id/textViewUsername"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintVertical_bias="0.17" />
 
     <ImageView
         android:id="@+id/imageViewLike"
@@ -66,4 +66,22 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageViewLike"
         app:layout_constraintStart_toEndOf="@+id/imageViewLike"
         app:layout_constraintTop_toBottomOf="@+id/textViewMessage" />
+
+    <ImageView
+        android:id="@+id/imageViewShowMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewUsername"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24_grey" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#DDDDDD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLike" />
 </androidx.constraintlayout.widget.ConstraintLayout>

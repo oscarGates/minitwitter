@@ -1,8 +1,7 @@
-package curso.android.minitwitter.ui;
+package curso.android.minitwitter.ui.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +17,7 @@ import curso.android.minitwitter.retrofit.MiniTwitterClient;
 import curso.android.minitwitter.retrofit.MiniTwitterService;
 import curso.android.minitwitter.retrofit.requests.RequestLogin;
 import curso.android.minitwitter.retrofit.response.ResponseAuth;
+import curso.android.minitwitter.ui.DashboardActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

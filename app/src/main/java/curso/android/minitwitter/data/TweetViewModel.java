@@ -1,13 +1,16 @@
 package curso.android.minitwitter.data;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import curso.android.minitwitter.ui.tweets.BottomModalTweetFragment;
 import curso.android.minitwitter.retrofit.response.Tweet;
 
 public class TweetViewModel extends AndroidViewModel {
@@ -21,9 +24,15 @@ public class TweetViewModel extends AndroidViewModel {
         tweets = tweetRepository.getAllTweets();
     }
 
+    public void openDialogTweetMenu(Context ctx, int idTweet){
+        BottomModalTweetFragment dialogTweet = BottomModalTweetFragment.newInstance(idTweet);
+        dialogTweet.show(((AppCompatActivity) ctx).getSupportFragmentManager(), "BottomModalTweetFragment");
+    }
+
     public LiveData<List<Tweet>> getTweets() {
         return tweets;
     }
+
     public LiveData<List<Tweet>> getFavTweets() {
         favTweets = tweetRepository.getFavsTweets();
         return favTweets;

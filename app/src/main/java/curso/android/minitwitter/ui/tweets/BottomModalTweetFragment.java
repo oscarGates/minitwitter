@@ -1,4 +1,4 @@
-package curso.android.minitwitter;
+package curso.android.minitwitter.ui.tweets;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -15,14 +15,29 @@ import android.view.ViewGroup;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import curso.android.minitwitter.R;
+import curso.android.minitwitter.common.Constantes;
 import curso.android.minitwitter.data.TweetViewModel;
 
 public class BottomModalTweetFragment extends BottomSheetDialogFragment {
 
     private TweetViewModel tweetViewModel;
+    private int idTweetEliminar;
 
-    public static BottomModalTweetFragment newInstance() {
-        return new BottomModalTweetFragment();
+    public static BottomModalTweetFragment newInstance(int idTweet) {
+        BottomModalTweetFragment fragment = new BottomModalTweetFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constantes.ARG_TWEET_ID, idTweet);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments() != null){
+            idTweetEliminar = getArguments().getInt(Constantes.ARG_TWEET_ID);
+        }
     }
 
     @Override
@@ -35,7 +50,7 @@ public class BottomModalTweetFragment extends BottomSheetDialogFragment {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
                 if(id == R.id.action_delete_tweet){
-                    tweetViewModel.deleteTweet();
+                    tweetViewModel.deleteTweet(idTweetEliminar);
                     getDialog().dismiss();
                     return true;
                 }
@@ -48,8 +63,7 @@ public class BottomModalTweetFragment extends BottomSheetDialogFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        tweetViewModel = ViewModelProviders.of(this).get(TweetViewModel.class);
-        // TODO: Use the ViewModel
+        tweetViewModel = ViewModelProviders.of(getActivity()).get(TweetViewModel.class);
     }
 
 }

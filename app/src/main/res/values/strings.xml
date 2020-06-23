@@ -23,4 +23,5 @@
     <string name="text_inicio">Inicio</string>
     <string name="tweets_label">Tweets</string>
     <string name="hint_mensaje_nuevo_tweet">¿Qué esta pasando?</string>
+    <string name="username">Nombre del usuatrio</string>
 </resources>
